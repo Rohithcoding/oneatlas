@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: oneatlas
+    runtime: node
+    plan: free
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm run start:self-hosted
+    healthCheckPath: /api/stats
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: postgresql://oneatlas:oneatlas@localhost:5432/oneatlas
+      - key: PGPORT
+        value: 5432
