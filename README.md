@@ -4,6 +4,9 @@ A working MVP of [oneatlas.dev](https://oneatlas.dev/): a searchable catalogue o
 
 Every screen is driven by **PostgreSQL through Prisma** and exposed through typed Next.js Route Handlers. Nothing in the UI is hardcoded catalogue data.
 
+- **Live demo:** https://oneatlas-rohithcodings-projects.vercel.app
+- **Repository:** https://github.com/Rohithcoding/oneatlas
+
 ## Role
 
 **Full Stack Engineer** — frontend, backend, data model, APIs and deployment.
@@ -95,7 +98,14 @@ All responses are JSON; errors use `{ error: { message, details? } }` with appro
 
 ## Deployment
 
-**Option A — Vercel + managed Postgres (recommended):** create a Neon/Supabase/Railway database, set `DATABASE_URL`, then import this repo into Vercel. Run `npx prisma db push && npm run db:seed` once against that database (or add it to a one-off script). No other config is required.
+**Option A — Vercel + managed Postgres (used for the live demo):** the deployed instance uses **Prisma Postgres** from the Vercel Marketplace. Create a Postgres database, set `DATABASE_URL` for the Vercel project, then import this repo. Push the schema and seed once against that database:
+
+```bash
+DATABASE_URL='postgres://…' npx prisma db push --skip-generate
+DATABASE_URL='postgres://…' npm run db:seed
+```
+
+Any standard Postgres URL (Neon, Supabase, Railway) works the same way. No other configuration is required.
 
 **Option B — single free host (included):** [`render.yaml`](./render.yaml) provisions a Node web service that runs `scripts/self-host.mjs`. It boots embedded PostgreSQL when `DATABASE_URL` is local, applies the schema, seeds an empty catalogue and starts `next start`. Point `DATABASE_URL` at an external Postgres to use the same entrypoint with a managed database.
 
